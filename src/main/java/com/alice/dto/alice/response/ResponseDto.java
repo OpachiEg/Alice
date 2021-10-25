@@ -7,6 +7,6 @@ public class ResponseDto {
 
     private String text;
     private String tts;
-    private Boolean endSession;
+    private boolean endSession;
 
 }
