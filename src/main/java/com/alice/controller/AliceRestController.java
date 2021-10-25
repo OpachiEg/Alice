@@ -18,14 +18,11 @@ public class AliceRestController {
         AliceResponseDto aliceResponseDto = new AliceResponseDto();
         ResponseDto responseDto = new ResponseDto();
         String text = aliceRequestDto.getRequest().getOriginal_utterance();
-        System.out.println(text);
-        System.out.println(text.matches("[0-9]+") && text.length()==10);
         if(text.matches("[0-9]+") && text.length()==10) {
-            System.out.println(true);
             responseDto.setText(text);
-            responseDto.setTts(text.substring(0,3) + " " + text.substring(3,6) + " " + text.substring(6,8) + " " + text.substring(8,10));
+            responseDto.setTts("<speaker audio=\"alice-sounds-things-explosion-1.opus\">");
+            //responseDto.setTts(text.substring(0,3) + " " + text.substring(3,6) + " " + text.substring(6,8) + " " + text.substring(8,10));
         } else if(EmailValidator.getInstance().isValid(text)) {
-            System.out.println(false);
             responseDto.setText(text);
             responseDto.setTts(text);
         }
