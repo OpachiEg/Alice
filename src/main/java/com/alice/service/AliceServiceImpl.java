@@ -14,6 +14,8 @@ public class AliceServiceImpl implements AliceService {
         AliceResponseDto aliceResponseDto = new AliceResponseDto();
         ResponseDto responseDto = new ResponseDto();
         String text = aliceRequestDto.getRequest().getOriginal_utterance();
+        text.replaceAll(" ","");
+        System.out.println(text);
         if(text.matches("[0-9]+") && text.length()==10) {
             responseDto.setText(text);
             responseDto.setTts(text.substring(0,3) + " " + text.substring(3,6) + " " + text.substring(6,8) + " " + text.substring(8,10));
