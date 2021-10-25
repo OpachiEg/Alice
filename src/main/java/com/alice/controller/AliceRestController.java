@@ -23,6 +23,7 @@ public class AliceRestController {
         } else if(EmailValidator.getInstance().isValid(text)) {
             responseDto.setText(text);
         }
+        aliceResponseDto.setResponse(responseDto);
         return aliceResponseDto;
     }
 
