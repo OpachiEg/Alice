@@ -18,9 +18,13 @@ public class AliceRestController {
         AliceResponseDto aliceResponseDto = new AliceResponseDto();
         ResponseDto responseDto = new ResponseDto();
         String text = aliceRequestDto.getRequest().getOriginal_utterance();
+        System.out.println(text);
+        System.out.println(text.matches("[1-9]") && text.length()==10);
         if(text.matches("[1-9]") && text.length()==10) {
+            System.out.println(true);
             responseDto.setText(text.substring(0,3) + " " + text.substring(3,6) + " " + text.substring(6,8) + " " + text.substring(8,10));
         } else if(EmailValidator.getInstance().isValid(text)) {
+            System.out.println(false);
             responseDto.setText(text);
         }
         aliceResponseDto.setResponse(responseDto);
