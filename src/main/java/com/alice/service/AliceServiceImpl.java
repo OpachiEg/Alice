@@ -21,6 +21,9 @@ public class AliceServiceImpl implements AliceService {
         } else if(EmailValidator.getInstance().isValid(text)) {
             responseDto.setText(text);
             responseDto.setTts(text);
+        } else {
+            responseDto.setText("Введённое значение не является номером или адресом электронной почты");
+            responseDto.setTts("Введённое значение не является номером или адресом электронной почты");
         }
         aliceResponseDto.setResponse(responseDto);
         return aliceResponseDto;
