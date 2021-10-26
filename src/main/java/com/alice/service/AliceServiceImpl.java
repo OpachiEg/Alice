@@ -27,10 +27,14 @@ public class AliceServiceImpl implements AliceService {
         text = text.replaceAll(" ", "");
         if (text.matches("[0-9]+") && text.length() == 10) {
             responseDto.setText(text);
-            responseDto.setTts(text.substring(0, 3) + " " + text.substring(3, 6) + " " + text.substring(6, 8) + " " + text.substring(8, 10));
+            responseDto.setTts("Привет мир");
+            //responseDto.setTts(text.substring(0, 3) + " " + text.substring(3, 6) + " " + text.substring(6, 8) + " " + text.substring(8, 10));
         } else if (EmailValidator.getInstance().isValid(text)) {
             responseDto.setText(text);
             responseDto.setTts(text);
+        } else if(text.equals("")) {
+            responseDto.setText("Скажите номер или почту");
+            responseDto.setTts("Скажите номер или почту");
         } else {
             responseDto.setText("Введённое значение не является номером или адресом электронной почты");
             responseDto.setTts("Введённое значение не является номером или адресом электронной почты");
