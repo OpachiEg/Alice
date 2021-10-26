@@ -21,7 +21,7 @@ public class AliceServiceImpl implements AliceService {
         if (text.contains("почту")) {
             range = getValueStartAndEnd(text, "почту");
         }
-        text = text.substring(range.end, range.start);
+        text = text.substring(range.start, range.end);
         text = text.replaceAll(" ", "");
         if (text.matches("[0-9]+") && text.length() == 10) {
             responseDto.setText(text);
