@@ -44,7 +44,7 @@ public class AliceServiceImpl implements AliceService {
 
     public Range getValueStartAndEnd(String text, String word) {
         Range range = new Range();
-        range.start = text.indexOf(word) + 6;
+        range.start = text.indexOf(word) + word.length() + 1;
         for (int i = range.start; i < text.length(); i++) {
             if (text.charAt(i) >= 1072 && text.charAt(i) <= 1105) {
                 range.end = i;
