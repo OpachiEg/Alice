@@ -3,7 +3,6 @@ package com.alice.service;
 import com.alice.dto.alice.AliceRequestDto;
 import com.alice.dto.alice.AliceResponseDto;
 import com.alice.dto.alice.response.ResponseDto;
-import com.ibm.icu.text.Transliterator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
