@@ -63,7 +63,13 @@ public class AliceServiceImpl implements AliceService {
     }
 
     public String transformEmailInNormalForm(String email) {
-        email = email.replaceAll("собака","@").replaceAll("точка",".").replaceAll("ком","com");
+        email = email.replaceAll("собака","@")
+                .replaceAll("точка",".")
+                .replaceAll("ком","com")
+                .replaceAll("Джимэйл","gmail")
+                .replaceAll("яху","yahoo")
+                .replaceAll("мэйл","mail")
+                .replaceAll("яндекс","yandex");
         Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
         String normalForm = toLatinTrans.transliterate(email);
         return normalForm;
