@@ -24,7 +24,7 @@ public class AliceServiceImpl implements AliceService {
         if(range!=null) {
             text = text.substring(range.start, range.end);
         }
-        text = text.replaceAll(" ", "");
+        text = text.replaceAll("[, ]", "");
         if (text.matches("[0-9]+") && text.length() == 10) {
             responseDto.setText(text);
             responseDto.setTts(text.substring(0, 3) + " " + text.substring(3, 6) + " " + text.substring(6, 8) + " " + text.substring(8, 10));
