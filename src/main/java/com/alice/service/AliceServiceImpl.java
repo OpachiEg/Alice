@@ -13,7 +13,7 @@ public class AliceServiceImpl implements AliceService {
     public AliceResponseDto returnValue(AliceRequestDto aliceRequestDto) {
         AliceResponseDto aliceResponseDto = new AliceResponseDto();
         ResponseDto responseDto = new ResponseDto();
-        String text = aliceRequestDto.getRequest().getOriginal_utterance();
+        String text = aliceRequestDto.getRequest().getCommand();
         Range range = null;
         if (text.contains("номер")) {
             range = getValueStartAndEnd(text, "номер");
@@ -24,9 +24,8 @@ public class AliceServiceImpl implements AliceService {
         if(range!=null) {
             text = text.substring(range.start, range.end);
         }
-        text = text.replaceAll("[, .;]", "");
+        text = text.replaceAll("[, .;()-]", "");
         System.out.println(text);
-        System.out.println(aliceRequestDto.getRequest().getCommand());
         System.out.println(text.matches("[0-9]+"));
         if (text.matches("[0-9]+") && text.length() == 10) {
             System.out.println("1");
