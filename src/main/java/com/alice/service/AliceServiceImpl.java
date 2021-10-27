@@ -3,6 +3,7 @@ package com.alice.service;
 import com.alice.dto.alice.AliceRequestDto;
 import com.alice.dto.alice.AliceResponseDto;
 import com.alice.dto.alice.response.ResponseDto;
+import com.ibm.icu.text.Transliterator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
@@ -26,19 +27,17 @@ public class AliceServiceImpl implements AliceService {
         }
         text = text.replaceAll("[, .;()-]", "");
         System.out.println(text);
-        System.out.println(text.matches("[0-9]+"));
         if (text.matches("[0-9]+") && text.length() == 10) {
-            System.out.println("1");
             responseDto.setText(text);
             responseDto.setTts(text.substring(0, 3) + " " + text.substring(3, 6) + " " + text.substring(6, 8) + " " + text.substring(8, 10));
-        } else if (EmailValidator.getInstance().isValid(text)) {
+        } else if (EmailValidator.getInstance().isValid(text) || (text.contains("собака") && text.contains("точка") && EmailValidator.getInstance().isValid((text=transformEmailInNormalForm(text))))) {
+            System.out.println(text);
             responseDto.setText(text);
             responseDto.setTts(text);
         } else if(text.equals("")) {
             responseDto.setText("Скажите номер или почту");
             responseDto.setTts("Скажите номер или почту");
         } else {
-
             responseDto.setText("Введённое значение не является номером или адресом электронной почты");
             responseDto.setTts("Введённое значение не является номером или адресом электронной почты");
         }
@@ -46,7 +45,7 @@ public class AliceServiceImpl implements AliceService {
         return aliceResponseDto;
     }
 
-    public Range getValueStartAndEnd(String text, String word) {
+    private Range getValueStartAndEnd(String text, String word) {
         Range range = new Range();
         range.start = text.indexOf(word) + word.length() + 1;
         for (int i = range.start; i < text.length(); i++) {
@@ -59,6 +58,13 @@ public class AliceServiceImpl implements AliceService {
             range.end = text.length();
         }
         return range;
+    }
+
+    public String transformEmailInNormalForm(String email) {
+        email = email.replaceAll("собака","@").replaceAll("точка",".").replaceAll("ком","com");
+        Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
+        String normalForm = toLatinTrans.transliterate(email);
+        return normalForm;
     }
 
     class Range {
