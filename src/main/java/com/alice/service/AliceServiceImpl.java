@@ -15,6 +15,7 @@ public class AliceServiceImpl implements AliceService {
         AliceResponseDto aliceResponseDto = new AliceResponseDto();
         ResponseDto responseDto = new ResponseDto();
         String text = aliceRequestDto.getRequest().getCommand();
+
         Range range = null;
         if (text.contains("номер")) {
             range = getValueStartAndEnd(text, "номер");
@@ -25,8 +26,13 @@ public class AliceServiceImpl implements AliceService {
         if(range!=null) {
             text = text.substring(range.start, range.end);
         }
-        text = text.replaceAll("[, .;()-]", "");
+
+        text = text.replaceAll("[ .;()-]", "");
+        String emailTT = text;
+        emailTT = emailTT.replaceAll(","," ");
+        text = text.replaceAll("[,]","");
         String emailNormalForm = null;
+
         if (text.matches("[0-9]+") && text.length() == 10) {
             responseDto.setText(text);
             responseDto.setTts(text.substring(0, 3) + " " + text.substring(3, 6) + " " + text.substring(6, 8) + " " + text.substring(8, 10));
