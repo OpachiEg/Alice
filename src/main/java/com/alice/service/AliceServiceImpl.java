@@ -26,6 +26,7 @@ public class AliceServiceImpl implements AliceService {
         }
         text = text.replaceAll("[, .;]", "");
         System.out.println(text);
+        System.out.println(aliceRequestDto.getRequest().getCommand());
         System.out.println(text.matches("[0-9]+"));
         if (text.matches("[0-9]+") && text.length() == 10) {
             System.out.println("1");
