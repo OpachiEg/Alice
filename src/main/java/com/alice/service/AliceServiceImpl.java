@@ -27,10 +27,7 @@ public class AliceServiceImpl implements AliceService {
             text = text.substring(range.start, range.end);
         }
 
-        text = text.replaceAll("[ .;()-]", "");
-        String emailTT = text;
-        emailTT = emailTT.replaceAll(","," ");
-        text = text.replaceAll("[,]","");
+        text = text.replaceAll("[, .;()-]", "");
         String emailNormalForm = null;
 
         if (text.matches("[0-9]+") && text.length() == 10) {
@@ -38,7 +35,7 @@ public class AliceServiceImpl implements AliceService {
             responseDto.setTts(text.substring(0, 3) + " " + text.substring(3, 6) + " " + text.substring(6, 8) + " " + text.substring(8, 10));
         } else if (EmailValidator.getInstance().isValid(text) || (text.contains("собака") && text.contains("точка") && EmailValidator.getInstance().isValid((emailNormalForm=transformEmailInNormalForm(text))))) {
             responseDto.setText(emailNormalForm);
-            responseDto.setTts(text);
+            responseDto.setTts(emailNormalForm);
         } else if(text.equals("")) {
             responseDto.setText("Скажите номер или почту");
             responseDto.setTts("Скажите номер или почту");
