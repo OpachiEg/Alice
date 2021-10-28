@@ -87,10 +87,10 @@ public class AliceServiceImpl implements AliceService {
         email = email.replaceAll(dog,"@")
                 .replaceAll(dot,".")
                 .replaceAll("ком","com")
-                .replaceAll("Джимэйл","gmail")
-                .replaceAll("Яху","yahoo")
-                .replaceAll("Мэйл","mail")
-                .replaceAll("Яндекс","yandex");
+                .replaceAll("джимэйл","gmail")
+                .replaceAll("яху","yahoo")
+                .replaceAll("мэйл","mail")
+                .replaceAll("яндекс","yandex");
         Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
         String normalForm = toLatinTrans.transliterate(email);
         return normalForm;
