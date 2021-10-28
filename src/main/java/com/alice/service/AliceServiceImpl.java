@@ -39,26 +39,26 @@ public class AliceServiceImpl implements AliceService {
         String text = aliceRequestDto.getRequest().getCommand();
 
         Range range = null;
-        for(String word : possibleWords) {
-            if(text.contains(word)) {
-                range = getValueStartAndEnd(text,word);
+        for (String word : possibleWords) {
+            if (text.contains(word)) {
+                range = getValueStartAndEnd(text, word);
             }
         }
-        if(range!=null) {
+        if (range != null) {
             text = text.substring(range.start, range.end);
         }
 
         text = text.replaceAll("[, .;()-]", "");
         String emailNormalForm = null;
 
-        if (text.matches("[0-9]+") && text.length()<=10) {
+        if (text.matches("[0-9]+") && text.length() <= 10) {
             responseDto.setText(text);
             responseDto.setTts(getNumberTts(text));
         } else if (EmailValidator.getInstance().isValid(text) ||
-                  (text.contains(dog) && text.contains(dot) && EmailValidator.getInstance().isValid((emailNormalForm=transformEmailToNormalForm(text))))) {
+                (text.contains(dog) && text.contains(dot) && EmailValidator.getInstance().isValid((emailNormalForm = transformEmailToNormalForm(text))))) {
             responseDto.setText(emailNormalForm);
             responseDto.setTts(emailNormalForm);
-        } else if(text.equals("")) {
+        } else if (text.equals("")) {
             responseDto.setText(firstMessage);
             responseDto.setTts(firstMessage);
         } else {
@@ -74,6 +74,7 @@ public class AliceServiceImpl implements AliceService {
         Range range = new Range();
         range.end = text.length();
         range.start = text.indexOf(word) + word.length() + 1;
+        if(word.equals("номер"))
         for (int i = range.start; i < text.length(); i++) {
             if (text.charAt(i) >= 1072 && text.charAt(i) <= 1105) {
                 range.end = i;
@@ -84,13 +85,13 @@ public class AliceServiceImpl implements AliceService {
     }
 
     private String transformEmailToNormalForm(String email) {
-        email = email.replaceAll(dog,"@")
-                .replaceAll(dot,".")
-                .replaceAll("ком","com")
-                .replaceAll("джимэйл","gmail")
-                .replaceAll("яху","yahoo")
-                .replaceAll("мэйл","mail")
-                .replaceAll("яндекс","yandex");
+        email = email.replaceAll(dog, "@")
+                .replaceAll(dot, ".")
+                .replaceAll("ком", "com")
+                .replaceAll("джимэйл", "gmail")
+                .replaceAll("яху", "yahoo")
+                .replaceAll("мэйл", "mail")
+                .replaceAll("яндекс", "yandex");
         Transliterator toLatinTrans = Transliterator.getInstance("Russian-Latin/BGN");
         String normalForm = toLatinTrans.transliterate(email);
         return normalForm;
@@ -99,17 +100,17 @@ public class AliceServiceImpl implements AliceService {
     private String getNumberTts(String number) {
         String tts = number;
         int length = number.length();
-        if(length==10) {
+        if (length == 10) {
             tts = number.substring(0, 3) + " " + number.substring(3, 6) + " " + number.substring(6, 8) + " " + number.substring(8, 10);
-        } else if (length>3) {
-            int remainder = length%3;
+        } else if (length > 3) {
+            int remainder = length % 3;
             StringBuilder ttsSb = new StringBuilder();
             int previous = 0;
-            for(int i=3;i<=length;i+=3) {
-                ttsSb.append(" " + number.substring(previous, (previous=i)));
+            for (int i = 3; i <= length; i += 3) {
+                ttsSb.append(" " + number.substring(previous, (previous = i)));
             }
-            if(remainder!=0) {
-                ttsSb.append(" " + number.substring(previous, previous+remainder));
+            if (remainder != 0) {
+                ttsSb.append(" " + number.substring(previous, previous + remainder));
             }
             tts = ttsSb.toString().trim();
         }
